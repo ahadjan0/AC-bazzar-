@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AC Bazaar — Buy • Sell • Service</title>
+<meta name="description" content="AC Bazaar — Buy, sell and find AC technician services across Pakistan.">
+<style>
+*{box-sizing:border-box} body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f5f8fc;color:#10233d}
+a{color:inherit;text-decoration:none} button,input,select{font:inherit}
+.nav{background:#06284b;color:#fff;padding:15px 5%;display:flex;align-items:center;gap:28px;position:sticky;top:0;z-index:5}
+.logo{font-size:24px;font-weight:800;white-space:nowrap} .logo span{color:#15b9f3} .navlinks{display:flex;gap:22px;flex:1;justify-content:center;font-size:14px}
+.post{background:#1889ef;color:#fff;border:0;border-radius:10px;padding:11px 16px;font-weight:700;cursor:pointer}
+.hero{padding:60px 5% 72px;background:linear-gradient(110deg,#083865,#0b6fa7);color:white;position:relative;overflow:hidden}
+.hero:after{content:"";position:absolute;right:-90px;top:-100px;width:420px;height:420px;border-radius:50%;background:rgba(255,255,255,.08)}
+.hero h1{font-size:46px;line-height:1.08;max-width:650px;margin:10px 0} .hero p{max-width:620px;font-size:18px;line-height:1.6}
+.search{background:#fff;padding:14px;border-radius:15px;display:grid;grid-template-columns:2fr 1fr 1fr 1fr auto;gap:10px;max-width:1100px;margin:-35px auto 0;position:relative;z-index:2;box-shadow:0 8px 25px rgba(0,0,0,.15)}
+.search input,.search select{border:1px solid #d8e2ef;border-radius:10px;padding:13px;outline:none} .search button{border:0;border-radius:10px;background:#087ff0;color:#fff;padding:0 24px;cursor:pointer;font-weight:700}
+.wrap{max-width:1150px;margin:auto;padding:35px 20px} .actions{display:grid;grid-template-columns:repeat(4,1fr);gap:16px} .action{padding:24px;border-radius:15px;background:#fff;border:1px solid #e1eaf4;box-shadow:0 3px 12px rgba(0,0,0,.04)} .action h3{margin:8px 0} .action p{color:#60748d;margin:0;line-height:1.5}
+h2{margin-top:40px} .brands{display:flex;gap:10px;flex-wrap:wrap} .brand{background:#fff;border:1px solid #dce6f0;border-radius:10px;padding:13px 22px;font-weight:700;color:#195083}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px} .listing{background:#fff;border:1px solid #dfe8f2;border-radius:14px;overflow:hidden;box-shadow:0 3px 12px rgba(0,0,0,.04)} .ac-photo{height:150px;background:linear-gradient(135deg,#e8f5ff,#c8e8ff);display:grid;place-items:center;font-size:58px} .listing-body{padding:15px} .badge{background:#d9f7e6;color:#087a3d;padding:5px 8px;border-radius:20px;font-size:12px} .listing h3{margin:10px 0 6px} .listing p{color:#65778d;margin:6px 0} .meta{display:flex;gap:8px;font-size:12px;color:#52667d;margin:10px 0} .meta span{background:#f0f4f8;padding:5px 7px;border-radius:6px} .listing strong{display:block;font-size:18px;margin:10px 0} .contact{width:100%;border:0;background:#087ff0;color:#fff;padding:11px;border-radius:8px;font-weight:700;cursor:pointer}
+.service{margin-top:35px;background:linear-gradient(90deg,#e4f5ff,#d6ecff);padding:28px;border-radius:16px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+footer{background:#06284b;color:#dcecff;padding:30px 5%;margin-top:45px} .foot{max-width:1150px;margin:auto;display:flex;justify-content:space-between;gap:20px}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:20;align-items:center;justify-content:center;padding:20px} .modal-box{background:#fff;border-radius:16px;padding:25px;max-width:500px;width:100%} .modal-box input,.modal-box select{width:100%;padding:12px;margin:7px 0;border:1px solid #ccd9e7;border-radius:8px} .close{float:right;cursor:pointer;font-size:22px}
+@media(max-width:850px){.navlinks{display:none}.hero h1{font-size:34px}.search{grid-template-columns:1fr 1fr;margin:20px}.search button{padding:13px}.actions,.grid{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.actions,.grid,.search{grid-template-columns:1fr}.hero{padding:40px 5% 50px}.foot{flex-direction:column}}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="logo">❄️ AC <span>BAZAAR</span><small style="display:block;font-size:9px;letter-spacing:2px;margin-left:31px">BUY • SELL • SERVICE</small></div>
+  <div class="navlinks"><a href="#home">Home</a><a href="#buy">Buy AC</a><a href="#sell">Sell AC</a><a href="#services">Technician Services</a><a href="#contact">Contact</a></div>
+  <button class="post" onclick="openModal()">＋ Post Ad</button>
+</nav>
+
+<section class="hero" id="home">
+  <div style="position:relative;z-index:1">
+    <div style="font-weight:700">Pakistan ka AC marketplace</div>
+    <h1>AC Buy, Sell & Technician Marketplace</h1>
+    <p>Naye aur used AC khareedein, apna AC bechein, ya professional technician se repair, installation aur maintenance service hasil karein.</p>
+  </div>
+</section>
+
+<div class="search">
+  <input id="q" placeholder="Search AC: brand, model, location..." oninput="filterListings()">
+  <select id="brand" onchange="filterListings()"><option value="">All Brands</option><option>Gree</option><option>Haier</option><option>PEL</option><option>Daikin</option><option>Orient</option><option>LG</option><option>Samsung</option><option>TCL</option><option>Hisense</option></select>
+  <select id="tonnage" onchange="filterListings()"><option value="">All Tonnages</option><option>1 Ton</option><option>1.5 Ton</option><option>2 Ton</option></select>
+  <select id="city" onchange="filterListings()"><option value="">All Cities</option><option>Karachi</option><option>Jacobabad</option><option>Lahore</option><option>Faisalabad</option><option>Hyderabad</option><option>Sukkur</option><option>Multan</option></select>
+  <button onclick="filterListings()">🔎 Search</button>
+</div>
+
+<main class="wrap">
+  <div class="actions">
+    <a class="action" href="#buy"><div style="font-size:34px">🛒</div><h3>Buy AC</h3><p>Behtareen condition mein new aur used ACs khareedein.</p></a>
+    <a class="action" href="#sell" onclick="openModal();return false"><div style="font-size:34px">📤</div><h3>Sell AC</h3><p>Apna purana ya naya AC asani se bechein.</p></a>
+    <a class="action" href="#services"><div style="font-size:34px">🔧</div><h3>Technician Services</h3><p>Repair, installation, gas charging aur maintenance.</p></a>
+    <div class="action"><div style="font-size:34px">🛡️</div><h3>Safe & Secure</h3><p>Seller/buyer contact aur clear listing details.</p></div>
+  </div>
+
+  <h2>Top AC Brands</h2>
+  <div class="brands"><div class="brand">GREE</div><div class="brand">DAIKIN</div><div class="brand">Haier</div><div class="brand">PEL</div><div class="brand">ORIENT</div><div class="brand">LG</div><div class="brand">SAMSUNG</div><div class="brand">TCL</div><div class="brand">Mitsubishi Electric</div><div class="brand">Hisense</div></div>
+
+  <h2 id="buy">Latest AC Listings</h2><p style="color:#60748d">New ads posted on this device appear here instantly.</p>
+  <div class="grid" id="listingGrid">
+    <article class="listing" data-search="gree 1.5 ton inverter jacobabad 1.5 ton inverter">
+      <div class="ac-photo">❄️</div>
+      <div class="listing-body">
+        <span class="badge">For Sale</span>
+        <h3>Gree 1.5 Ton Inverter</h3>
+        <p>📍 Jacobabad</p>
+        <div class="meta"><span>1.5 Ton</span><span>Inverter</span></div>
+        <strong>Rs. 75,000</strong>
+        <button class="contact" onclick="contactSeller('Gree 1.5 Ton Inverter')">WhatsApp / Contact Seller</button>
+      </div>
+    </article>
+    <article class="listing" data-search="haier 1 ton non-inverter karachi 1 ton non-inverter">
+      <div class="ac-photo">❄️</div>
+      <div class="listing-body">
+        <span class="badge">For Sale</span>
+        <h3>Haier 1 Ton Non-Inverter</h3>
+        <p>📍 Karachi</p>
+        <div class="meta"><span>1 Ton</span><span>Non-Inverter</span></div>
+        <strong>Rs. 38,000</strong>
+        <button class="contact" onclick="contactSeller('Haier 1 Ton Non-Inverter')">WhatsApp / Contact Seller</button>
+      </div>
+    </article>
+    <article class="listing" data-search="pel 2 ton inverter lahore 2 ton inverter">
+      <div class="ac-photo">❄️</div>
+      <div class="listing-body">
+        <span class="badge">For Sale</span>
+        <h3>PEL 2 Ton Inverter</h3>
+        <p>📍 Lahore</p>
+        <div class="meta"><span>2 Ton</span><span>Inverter</span></div>
+        <strong>Rs. 110,000</strong>
+        <button class="contact" onclick="contactSeller('PEL 2 Ton Inverter')">WhatsApp / Contact Seller</button>
+      </div>
+    </article>
+    <article class="listing" data-search="daikin 1.5 ton faisalabad 1.5 ton inverter">
+      <div class="ac-photo">❄️</div>
+      <div class="listing-body">
+        <span class="badge">For Sale</span>
+        <h3>Daikin 1.5 Ton</h3>
+        <p>📍 Faisalabad</p>
+        <div class="meta"><span>1.5 Ton</span><span>Inverter</span></div>
+        <strong>Rs. 68,000</strong>
+        <button class="contact" onclick="contactSeller('Daikin 1.5 Ton')">WhatsApp / Contact Seller</button>
+      </div>
+    </article></div>
+
+  <section class="service" id="services">
+    <div><h2 style="margin:0 0 8px">Need AC Service?</h2><p style="margin:0;color:#506b86">Professional AC repair, installation, gas charging and maintenance services at your doorstep.</p></div>
+    <button class="post" onclick="alert('Technician search will be connected in the next version.')">Find a Technician →</button>
+  </section>
+</main>
+
+<footer id="contact">
+  <div class="foot">
+    <div><strong style="font-size:20px">❄️ AC <span style="color:#19baf3">BAZAAR</span></strong><br><small>Buy • Sell • Service</small></div>
+    <div>Home &nbsp;|&nbsp; Buy AC &nbsp;|&nbsp; Sell AC &nbsp;|&nbsp; Technician Services &nbsp;|&nbsp; Contact</div>
+    <div>Made in Pakistan 🇵🇰</div>
+  </div>
+</footer>
+
+<div class="modal" id="modal">
+  <div class="modal-box">
+    <span class="close" onclick="closeModal()">×</span>
+    <h2 style="margin-top:0">Post Your AC Ad</h2>
+    <input placeholder="AC title e.g. Gree 1.5 Ton Inverter">
+    <select><option>Select Brand</option><option>Gree</option><option>Haier</option><option>PEL</option><option>Daikin</option></select>
+    <input placeholder="City">
+    <input placeholder="Price (Rs.)">
+    <input type="file" accept="image/*">
+    <button class="post" style="width:100%;margin-top:8px" onclick="alert('Demo: ad form received. Database/login will be connected in the next version.');closeModal()">Submit Ad</button>
+  </div>
+</div>
+
+<script>
+function openModal(){document.getElementById('modal').style.display='flex'}
+function closeModal(){document.getElementById('modal').style.display='none'}
+function contactSeller(title){alert('Demo contact for: '+title+'\nIn the live version this button can open WhatsApp or seller chat.')}
+function filterListings(){
+  const q=document.getElementById('q').value.toLowerCase().trim();
+  document.querySelectorAll('.listing').forEach(card=>{card.style.display=card.dataset.search.includes(q)?'block':'none'})
+}
+window.onclick=e=>{if(e.target.id==='modal')closeModal()}
+</script>
+
+<script>
+const STORE_KEY = "ac_bazaar_listings_v2";
+function getSavedAds(){try{return JSON.parse(localStorage.getItem(STORE_KEY)||"[]")}catch(e){return[]}}
+function saveAds(ads){localStorage.setItem(STORE_KEY,JSON.stringify(ads))}
+function openModal(){document.getElementById("modal").style.display="flex"}
+function closeModal(){document.getElementById("modal").style.display="none"}
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]))}
+
+function renderSavedAds(){
+ const grid=document.getElementById("listingGrid"); if(!grid)return;
+ grid.querySelectorAll(".user-listing").forEach(x=>x.remove());
+ getSavedAds().slice().reverse().forEach(ad=>{
+  const article=document.createElement("article"); article.className="listing user-listing";
+  article.dataset.search=`${ad.title} ${ad.brand} ${ad.tonnage} ${ad.type} ${ad.city}`.toLowerCase();
+  const image=ad.image?`<img src="${ad.image}" alt="${esc(ad.title)}" style="width:100%;height:150px;object-fit:cover">`:`<div class="ac-photo">❄️</div>`;
+  const wa=String(ad.phone||"").replace(/\D/g,"");
+  const contact=wa?`<button class="contact" onclick="window.open('https://wa.me/${wa}?text='+encodeURIComponent('Assalam o Alaikum, AC Bazaar par aapka '+${JSON.stringify(ad.title)}+' ad dekha hai.'),'_blank')">WhatsApp Seller</button>`:`<button class="contact" onclick="alert('Seller ne WhatsApp number add nahi kiya.')">Contact Seller</button>`;
+  article.innerHTML=`${image}<div class="listing-body"><span class="badge">For Sale</span><h3>${esc(ad.title)}</h3><p>📍 ${esc(ad.city)}</p><div class="meta"><span>${esc(ad.tonnage)} Ton</span><span>${esc(ad.type)}</span><span>${esc(ad.brand)}</span></div><strong>Rs. ${Number(ad.price||0).toLocaleString("en-PK")}</strong>${contact}</div>`;
+  grid.prepend(article);
+ });
+}
+function filterListings(){
+ const q=(document.getElementById("q")?.value||"").toLowerCase();
+ const brand=(document.getElementById("brand")?.value||"").toLowerCase();
+ const ton=(document.getElementById("tonnage")?.value||"").toLowerCase();
+ const city=(document.getElementById("city")?.value||"").toLowerCase();
+ document.querySelectorAll("#listingGrid .listing").forEach(card=>{
+  const text=(card.dataset.search||card.innerText).toLowerCase();
+  card.style.display=(!q||text.includes(q))&&(!brand||text.includes(brand))&&(!ton||text.includes(ton))&&(!city||text.includes(city))?"":"none";
+ });
+}
+function submitAd(){
+ const title=document.getElementById("adTitle")?.value.trim();
+ const brand=document.getElementById("adBrand")?.value||"";
+ const tonnage=document.getElementById("adTonnage")?.value.trim();
+ const type=document.getElementById("adType")?.value||"";
+ const city=document.getElementById("adCity")?.value.trim();
+ const price=document.getElementById("adPrice")?.value.trim();
+ const phone=document.getElementById("adPhone")?.value.trim();
+ const file=document.getElementById("adImage")?.files[0];
+ if(!title||!tonnage||!city||!price){alert("Title, tonnage, city aur price zaroor fill karein.");return}
+ const finish=image=>{const ads=getSavedAds();ads.push({title,brand,tonnage,type,city,price,phone,image:image||""});saveAds(ads);closeModal();renderSavedAds();filterListings();alert("Ad successfully add ho gaya!");};
+ if(file){const r=new FileReader();r.onload=()=>finish(r.result);r.readAsDataURL(file)}else finish("");
+}
+window.addEventListener("load",()=>{renderSavedAds();filterListings()});
+</script>
+
+</body>
+</html>
